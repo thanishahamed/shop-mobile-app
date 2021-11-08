@@ -1,16 +1,55 @@
 import React from "react";
-import { View, Text, SafeAreaView, FlatList } from "react-native";
-import { useSelector } from "react-redux";
+import {
+  FlatList,
+  Button,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+} from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import { Ionicons } from "@expo/vector-icons";
+import ProductItem from "../../components/shop/ProductItem";
+import * as cartActions from "../../store/actions/cartActions";
 
-export default function ProductsOverviewScreen() {
-  const products = useSelector((state) => state.Products.availableProducts);
+const ProductsOverviewScreen = (props) => {
+  const products = useSelector((state) => state.products.availableProducts);
+  const dispatch = useDispatch();
 
-  const renderItem = ({ item }) => {
-    return <Text>{item.title}</Text>;
-  };
+  React.useLayoutEffect(() => {
+    props.navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity onPress={() => props.navigation.navigate("Cart")}>
+          <Ionicons name="ios-cart" size={32} color="red" />
+        </TouchableOpacity>
+      ),
+    });
+  }, [props.navigation]);
+
   return (
-    <SafeAreaView>
-      <FlatList data={products} renderItem={renderItem} />
-    </SafeAreaView>
+    <FlatList
+      data={products}
+      renderItem={({ item }) => (
+        <ProductItem
+          imageUrl={item.imageUrl}
+          title={item.title}
+          price={item.price}
+          onViewDetail={() => {
+            props.navigation.navigate("ProductDetail", {
+              productId: item.id,
+              productTitle: item.title,
+            });
+          }}
+          onAddToCart={() => {
+            dispatch(cartActions.addToCart(itemData.item));
+          }}
+        />
+      )}
+    />
   );
-}
+};
+
+ProductsOverviewScreen.navigationOptions = {
+  headerTitle: "All Products",
+};
+
+export default ProductsOverviewScreen;
