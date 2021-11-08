@@ -1,6 +1,16 @@
 import React from "react";
-import { View } from "react-native";
+import { View, Text, SafeAreaView, FlatList } from "react-native";
+import { useSelector } from "react-redux";
 
 export default function ProductsOverviewScreen() {
-  return <View></View>;
+  const products = useSelector((state) => state.Products.availableProducts);
+
+  const renderItem = ({ item }) => {
+    return <Text>{item.title}</Text>;
+  };
+  return (
+    <SafeAreaView>
+      <FlatList data={products} renderItem={renderItem} />
+    </SafeAreaView>
+  );
 }
