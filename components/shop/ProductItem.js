@@ -21,7 +21,7 @@ export default function ProductItem(props) {
         </View>
         <View style={styles.actions}>
           <Button title="Show details" onPress={props.onViewDetail} />
-          <Button title="To Cart" onPress={props.addToCart} />
+          <Button title="To Cart" onPress={props.onAddToCart} />
         </View>
       </View>
     </TouchableOpacity>

@@ -22,6 +22,11 @@ const ProductsOverviewScreen = (props) => {
           <Ionicons name="ios-cart" size={32} color="red" />
         </TouchableOpacity>
       ),
+      headerLeft: () => (
+        <TouchableOpacity onPress={() => props.navigation.toggleDrawer()}>
+          <Ionicons name="ios-list" size={32} color="red" />
+        </TouchableOpacity>
+      ),
     });
   }, [props.navigation]);
 
@@ -39,9 +44,7 @@ const ProductsOverviewScreen = (props) => {
               productTitle: item.title,
             });
           }}
-          onAddToCart={() => {
-            dispatch(cartActions.addToCart(itemData.item));
-          }}
+          onAddToCart={() => dispatch(cartActions.addToCart(item))}
         />
       )}
     />
